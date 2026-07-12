@@ -24,6 +24,12 @@
 
 > **The joke:** Claude Code adopted a Codex model. The crab kept the terminal. Its new collar says `CX`, which is legally distinct from having an identity crisis.
 
+<p align="center">
+  <img src="assets/claudex-acquisition-rider.png" alt="Claudex acquisition complete: the Codex pet rides the Claude Code crab" width="100%" />
+</p>
+
+<p align="center"><em>The post-merger org chart. No companies were acquired. One crab changed reporting lines.</em></p>
+
 ## Try it in 30 seconds
 
 ```powershell
@@ -159,6 +165,8 @@ claudex proxy stop              # stop it
 ## Codex calling Claude Code
 
 The companion repository [codex-claude-code-skill](https://github.com/wangsiyi7/codex-claude-code-skill) installs a global Codex skill for bounded delegation to native Claude Code or to the Claudex route.
+
+Read the entirely serious [launch announcement](docs/launch-announcement.zh-CN.md) prepared for the entirely fictional acquisition.
 
 ## Security boundaries
 

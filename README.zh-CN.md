@@ -24,6 +24,12 @@
 
 > **本项目的笑点：** Claude Code 收养了一个 Codex 模型。小螃蟹坚持留下终端，还戴上了写着 `CX` 的项圈——这绝对不是身份危机，只是跨平台协作。
 
+<p align="center">
+  <img src="assets/claudex-acquisition-rider.png" alt="Claudex 完成收购：Codex 宠物骑在 Claude Code 小螃蟹上" width="100%" />
+</p>
+
+<p align="center"><em>合并后的组织架构：没有公司被收购，只有一只螃蟹调整了汇报关系。</em></p>
+
 ## 30 秒开始使用
 
 ```powershell
@@ -159,6 +165,8 @@ claudex proxy stop              # 停止本地代理
 ## 让 Codex 调用 Claude Code
 
 配套仓库 [codex-claude-code-skill](https://github.com/wangsiyi7/codex-claude-code-skill) 可以安装一个全局 Codex Skill，让 Codex 在明确边界内调用原生 Claude Code 或 Claudex 路由。
+
+阅读为本次完全虚构的收购准备的、完全严肃的[正式发布公告](docs/launch-announcement.zh-CN.md)。
 
 ## 安全边界
 
