@@ -1,0 +1,32 @@
+{
+  "name": "claudex",
+  "version": "0.1.0",
+  "description": "Run Claude Code with Codex-authenticated GPT models through CLIProxyAPI.",
+  "type": "module",
+  "bin": {
+    "claudex": "./bin/claudex.mjs"
+  },
+  "scripts": {
+    "test": "node --test",
+    "check": "node --check bin/claudex.mjs && node --check src/config.mjs && node --check src/proxy.mjs && node --check src/claude.mjs && node --check src/team.mjs"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wangsiyi7/claudex.git"
+  },
+  "bugs": {
+    "url": "https://github.com/wangsiyi7/claudex/issues"
+  },
+  "homepage": "https://github.com/wangsiyi7/claudex#readme",
+  "keywords": [
+    "claude-code",
+    "codex",
+    "cliproxyapi",
+    "subagents",
+    "orchestration"
+  ]
+}
