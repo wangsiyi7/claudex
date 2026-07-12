@@ -18,6 +18,37 @@ export const defaults = Object.freeze({
   proxyVersion: 'latest'
 });
 
+export const presets = Object.freeze({
+  economy: Object.freeze({
+    description: 'Fast, low-token work',
+    mainEffort: 'medium',
+    agentEffort: 'low',
+    agents: 4,
+    concurrency: 2
+  }),
+  balanced: Object.freeze({
+    description: 'Recommended default',
+    mainEffort: 'high',
+    agentEffort: 'medium',
+    agents: 8,
+    concurrency: 3
+  }),
+  quality: Object.freeze({
+    description: 'Hard coding and design tasks',
+    mainEffort: 'xhigh',
+    agentEffort: 'high',
+    agents: 8,
+    concurrency: 3
+  }),
+  maximum: Object.freeze({
+    description: 'Highest effort; use selectively',
+    mainEffort: 'max',
+    agentEffort: 'xhigh',
+    agents: 6,
+    concurrency: 2
+  })
+});
+
 export async function loadConfig() {
   let raw;
   try {
@@ -66,6 +97,23 @@ export async function updateConfig(key, value) {
   await writeFile(configPath, `${JSON.stringify(config, null, 2)}\n`, { mode: 0o600 });
   if (process.platform !== 'win32') await chmod(configPath, 0o600);
   await writeProxyConfig(config);
+}
+
+export async function applyPreset(name) {
+  const preset = presets[name];
+  if (!preset) throw new Error(`Unknown preset: ${name}. Use economy, balanced, quality or maximum.`);
+  const config = await loadConfig();
+  Object.assign(config, {
+    mainEffort: preset.mainEffort,
+    agentEffort: preset.agentEffort,
+    agents: preset.agents,
+    concurrency: preset.concurrency,
+    preset: name
+  });
+  await writeFile(configPath, `${JSON.stringify(config, null, 2)}\n`, { mode: 0o600 });
+  if (process.platform !== 'win32') await chmod(configPath, 0o600);
+  await writeProxyConfig(config);
+  return config;
 }
 
 export async function writeProxyConfig(config) {

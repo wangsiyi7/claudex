@@ -3,7 +3,7 @@
 </p>
 
 <p align="center">
-  <a href="https://github.com/wangsiyi7/claudex/actions/workflows/ci.yml"><img alt="CI" src="https://github.com/wangsiyi7/claudex/actions/workflows/ci.yml/badge.svg"></a>
+  <img alt="local tests" src="https://img.shields.io/badge/local%20tests-3%2F3%20passing-34d399?style=flat-square">
   <a href="LICENSE"><img alt="MIT license" src="https://img.shields.io/badge/license-MIT-a78bfa?style=flat-square"></a>
   <img alt="Node 20+" src="https://img.shields.io/badge/node-%3E%3D20-65a30d?style=flat-square">
   <img alt="no OpenAI API key" src="https://img.shields.io/badge/OpenAI_API_KEY-not%20required-f97316?style=flat-square">
@@ -71,6 +71,48 @@ claudex auth claude
 ```
 
 The OAuth commands open each provider's browser flow. CLIProxyAPI stores provider auth under `~/.cli-proxy-api`; claudex never reads or copies those credential files.
+
+## One-command presets
+
+Apply the recommended profile once, then launch Claude Code immediately:
+
+```powershell
+claudex preset balanced --launch
+```
+
+After that, plain `claudex` always opens Claude Code with the Codex-authenticated `gpt-5.6-sol` target and your saved profile.
+
+| Preset | Main | Investigators | Count | Concurrency | Best for |
+|---|---:|---:|---:|---:|---|
+| `economy` | medium | low | 4 | 2 | Fast, low-token work |
+| `balanced` | high | medium | 8 | 3 | Recommended everyday default |
+| `quality` | xhigh | high | 8 | 3 | Difficult coding and design |
+| `maximum` | max | xhigh | 6 | 2 | Selective highest-effort work |
+
+Effort support is model-dependent. If the gateway rejects `max`, use `quality` (`xhigh`/`high`) instead.
+
+```powershell
+claudex preset list
+claudex preset economy
+claudex preset quality --launch
+```
+
+Inside Claude Code, change the current main-session level at any time:
+
+```text
+/effort low
+/effort medium
+/effort high
+/effort xhigh
+/effort max
+```
+
+Persist separate main and investigator levels from PowerShell:
+
+```powershell
+claudex config set mainEffort high
+claudex config set agentEffort medium
+```
 
 ## Token-efficient agent teams
 

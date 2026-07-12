@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-import { loadConfig, setupConfig, updateConfig } from '../src/config.mjs';
+import { applyPreset, loadConfig, presets, setupConfig, updateConfig } from '../src/config.mjs';
 import { authenticate, installProxy, proxyStatus, startProxy, stopProxy } from '../src/proxy.mjs';
 import { runClaude, runDoctor } from '../src/claude.mjs';
 import { runTeam } from '../src/team.mjs';
@@ -18,6 +18,9 @@ Usage:
   claudex auth codex|claude       Run the provider OAuth login
   claudex proxy start|stop|status Manage the local proxy
   claudex doctor                  Check binaries, proxy, auth and model routing
+  claudex preset list             Show effort presets
+  claudex preset <name>           Persist economy, balanced, quality or maximum
+  claudex preset <name> --launch  Apply a preset and open Claude Code immediately
   claudex config                  Show safe, non-secret configuration
   claudex config set <key> <val>  Set model, mainEffort, agentEffort or concurrency
   claudex team [options] -- <task> Run medium-effort investigators and high-effort synthesis
@@ -53,6 +56,17 @@ try {
     await runDoctor(await loadConfig());
   } else if (command === 'team') {
     await runTeam(args.slice(1), await loadConfig());
+  } else if (command === 'preset') {
+    const name = args[1];
+    if (!name || name === 'list') {
+      for (const [presetName, preset] of Object.entries(presets)) {
+        console.log(`${presetName.padEnd(9)} main=${preset.mainEffort.padEnd(6)} agents=${preset.agentEffort.padEnd(6)} count=${preset.agents} concurrency=${preset.concurrency}  ${preset.description}`);
+      }
+    } else {
+      const config = await applyPreset(name);
+      console.log(`Preset '${name}' saved: GPT-5.6 Sol main=${config.mainEffort}, investigators=${config.agentEffort}, count=${config.agents}, concurrency=${config.concurrency}.`);
+      if (args.includes('--launch')) await runClaude([], { config });
+    }
   } else if (command === 'config') {
     if (args[1] === 'set') {
       await updateConfig(args[2], args[3]);

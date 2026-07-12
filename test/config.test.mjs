@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { defaults } from '../src/config.mjs';
+import { defaults, presets } from '../src/config.mjs';
 import { parseArgs } from '../src/team.mjs';
 
 test('team defaults right-size investigators', () => {
@@ -22,4 +22,11 @@ test('team accepts explicit effort and concurrency', () => {
 
 test('team rejects missing task', () => {
   assert.throws(() => parseArgs([], defaults), /Provide a task/);
+});
+
+test('balanced preset keeps main high and investigators medium', () => {
+  assert.deepEqual(
+    { mainEffort: presets.balanced.mainEffort, agentEffort: presets.balanced.agentEffort, concurrency: presets.balanced.concurrency },
+    { mainEffort: 'high', agentEffort: 'medium', concurrency: 3 }
+  );
 });
