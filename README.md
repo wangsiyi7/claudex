@@ -1,103 +1,84 @@
-<p align="center">
-  <img src="assets/hero.svg" alt="claudex — Claude Code harness with Codex models and right-sized subagents" width="100%" />
+<p align="right">
+  <strong>English</strong> · <a href="README.zh-CN.md">简体中文</a>
 </p>
 
 <p align="center">
-  <img alt="local tests" src="https://img.shields.io/badge/local%20tests-3%2F3%20passing-34d399?style=flat-square">
+  <img src="assets/claudex-pet-hero.png" alt="Claudex — Claude Code adopted a Codex model; the crab kept the terminal" width="100%" />
+</p>
+
+<p align="center">
+  <img alt="local tests" src="https://img.shields.io/badge/local%20tests-4%2F4%20passing-34d399?style=flat-square">
   <a href="LICENSE"><img alt="MIT license" src="https://img.shields.io/badge/license-MIT-a78bfa?style=flat-square"></a>
   <img alt="Node 20+" src="https://img.shields.io/badge/node-%3E%3D20-65a30d?style=flat-square">
+  <img alt="Windows verified" src="https://img.shields.io/badge/Windows-verified-38bdf8?style=flat-square">
   <img alt="no OpenAI API key" src="https://img.shields.io/badge/OpenAI_API_KEY-not%20required-f97316?style=flat-square">
 </p>
 
-<p align="center">
-  <strong>Keep Claude Code's interface and tools. Run a Codex-authenticated GPT model inside it.</strong><br>
-  Right-size investigator effort programmatically instead of letting every subagent inherit the most expensive setting.
-</p>
+<h3 align="center">Same terminal. Different brain. Adjustable effort.</h3>
 
 <p align="center">
-  <a href="#two-minute-setup">Setup</a> ·
-  <a href="#token-efficient-agent-teams">Agent teams</a> ·
-  <a href="#how-it-works">Architecture</a> ·
-  <a href="#security-boundaries">Security</a>
+  Claudex runs the <strong>Claude Code interface and tool harness</strong> with a
+  <strong>Codex-authenticated GPT model</strong> through a local CLIProxyAPI bridge.
+  Main sessions can think hard; investigators do not have to burn the same budget.
 </p>
 
-## Why claudex?
+> **The joke:** Claude Code adopted a Codex model. The crab kept the terminal. Its new collar says `CX`, which is legally distinct from having an identity crisis.
 
-| | Plain inherited orchestration | claudex team |
-|---|---|---|
-| Main reasoning | One global setting | `high` by default |
-| Investigator reasoning | Often inherits main | Explicit `medium` |
-| Concurrency | Harness-dependent | Bounded; default `3` |
-| Provider access | API key or native provider | Codex OAuth through CLIProxyAPI |
-| Verification | Easy to assume a model exists | `/v1/models` checked by `claudex doctor` |
-
-`claudex` packages the workflow demonstrated in Theo's July 2026 experiment into a reproducible command-line tool:
-
-- an interactive Claude Code session targeting `gpt-5.6-sol` at `high` effort;
-- independent investigators launched at `medium` effort;
-- a single high-effort synthesis pass;
-- a loopback-only proxy and local OAuth credential storage;
-- no `OPENAI_API_KEY`.
-
-> [!IMPORTANT]
-> `gpt-5.6-sol` is the default target, not a promise of account entitlement. Run `claudex doctor`; if the model is not returned for your authenticated account, select an ID that is.
-
-## Two-minute setup
-
-### Prerequisites
-
-- Node.js 20+
-- Claude Code and Codex CLI installed
-- a Codex account entitled to the model you select
-
-### Windows
+## Try it in 30 seconds
 
 ```powershell
-git clone https://github.com/wangsiyi7/claudex.git
-cd claudex
-npm install -g .
-
+npm install -g github:wangsiyi7/claudex
 claudex setup
 claudex auth codex
-claudex proxy start
-claudex doctor
-claudex
-```
-
-Add the reverse Claude OAuth route when you want CLIProxyAPI to expose both providers:
-
-```powershell
-claudex auth claude
-```
-
-The OAuth commands open each provider's browser flow. CLIProxyAPI stores provider auth under `~/.cli-proxy-api`; claudex never reads or copies those credential files.
-
-## One-command presets
-
-Apply the recommended profile once, then launch Claude Code immediately:
-
-```powershell
 claudex preset balanced --launch
 ```
 
-After that, plain `claudex` always opens Claude Code with the Codex-authenticated `gpt-5.6-sol` target and your saved profile.
+That opens Claude Code with:
+
+```text
+model         gpt-5.6-sol
+main effort   high
+investigators medium
+agents        8
+concurrency   3
+```
+
+No `OPENAI_API_KEY` is required. Provider OAuth files stay under `~/.cli-proxy-api`; Claudex does not copy them into the repository.
+
+> [!IMPORTANT]
+> `gpt-5.6-sol` is the default target, not a promise of account entitlement. `claudex doctor` verifies that the model is exposed for your authenticated account.
+
+## Why this exists
+
+| | Inherited orchestration | Claudex |
+|---|---|---|
+| Main reasoning | One global setting | Explicit per session |
+| Investigator reasoning | Often inherits the expensive level | Independent preset |
+| Concurrency | Harness-dependent | Bounded |
+| Authentication | API key or provider default | Codex OAuth via local proxy |
+| Model claims | Hope-driven development | Verified through `/v1/models` |
+
+The practical win is simple: use more reasoning where synthesis matters, and less where eight agents are independently checking the same rocks.
+
+## Presets
 
 | Preset | Main | Investigators | Count | Concurrency | Best for |
 |---|---:|---:|---:|---:|---|
 | `economy` | medium | low | 4 | 2 | Fast, low-token work |
-| `balanced` | high | medium | 8 | 3 | Recommended everyday default |
+| `balanced` | high | medium | 8 | 3 | Recommended default |
 | `quality` | xhigh | high | 8 | 3 | Difficult coding and design |
-| `maximum` | max | xhigh | 6 | 2 | Selective highest-effort work |
-
-Effort support is model-dependent. If the gateway rejects `max`, use `quality` (`xhigh`/`high`) instead.
+| `maximum` | max | xhigh | 6 | 2 | Selective, highest-effort work |
 
 ```powershell
 claudex preset list
 claudex preset economy
+claudex preset balanced --launch
 claudex preset quality --launch
 ```
 
-Inside Claude Code, change the current main-session level at any time:
+Effort support is model-dependent. If `max` is rejected, use `quality`.
+
+Inside Claude Code, adjust the current main session at any time:
 
 ```text
 /effort low
@@ -107,100 +88,103 @@ Inside Claude Code, change the current main-session level at any time:
 /effort max
 ```
 
-Persist separate main and investigator levels from PowerShell:
+Persist main and investigator levels separately:
 
 ```powershell
-claudex config set mainEffort high
+claudex config set mainEffort xhigh
 claudex config set agentEffort medium
+claudex config set concurrency 3
 ```
 
-## Token-efficient agent teams
+## Programmatic agent teams
 
 ```powershell
 claudex team --agents 8 --concurrency 3 -- "Audit this repository and propose the smallest safe patch"
 ```
 
-Eight isolated investigators run in read-only plan mode at `medium` effort, in waves of at most three. Their findings are passed to one `high`-effort synthesis call.
-
-Override the defaults when a task deserves a different budget:
-
-```powershell
-claudex team `
-  --agents 4 `
-  --concurrency 2 `
-  --agent-effort low `
-  --main-effort high `
-  -- "Compare these two implementation strategies"
-```
-
-## How it works
+Investigators run as separate, read-only Claude Code processes at the configured investigator effort. One main process then synthesizes their findings at the configured main effort.
 
 ```mermaid
 flowchart LR
-    U["claudex command"] --> C["Claude Code harness / UI"]
-    C -->|"Anthropic-compatible /v1/messages"| P["CLIProxyAPI on 127.0.0.1:8317"]
-    P -->|"Codex OAuth"| G["Codex-authenticated GPT model"]
+    U["claudex"] --> C["Claude Code harness"]
+    C -->|"Anthropic-compatible messages"| P["CLIProxyAPI · 127.0.0.1"]
+    P -->|"Codex OAuth"| G["gpt-5.6-sol"]
     U --> T["claudex team"]
-    T -->|"N processes · medium"| I["Independent investigators"]
-    I -->|"findings"| S["High-effort synthesis"]
+    T -->|"N × medium"| I["Investigators"]
+    I -->|"evidence"| S["High-effort synthesis"]
 ```
 
-For the current invocation, the interactive wrapper sets the proxy URL, a locally generated bearer token, the custom model option, the subagent model, bounded tool concurrency, and disabled proxy tool search. It then launches:
+## Install and reuse
 
-```text
-claude --model gpt-5.6-sol --effort high
-```
-
-Normal Claude Code arguments pass through unchanged:
+### Fast global install
 
 ```powershell
-claudex --continue
-claudex --permission-mode plan
+npm install -g github:wangsiyi7/claudex
+claudex setup
 ```
 
-The screenshot-derived `CLAUDE_CODE_ALWAYS_ENABLE_EFFORT` and `CLAUDE_CODE_MAX_TOOL_USE_CONCURRENCY` variables remain as compatibility hints. The deterministic controls are Claude Code's `--effort`, `CLAUDE_CODE_SUBAGENT_MODEL`, and the explicit per-process effort used by `claudex team`.
-
-## Configuration
+### Install from a clone
 
 ```powershell
-claudex config
-claudex config set model gpt-5.6-sol
-claudex config set mainEffort high
-claudex config set agentEffort medium
-claudex config set concurrency 3
+git clone https://github.com/wangsiyi7/claudex.git
+cd claudex
+npm install -g .
+claudex setup
 ```
 
-Local configuration lives under `~/.claudex/`. It contains a random token for the loopback proxy and must never be committed.
+### macOS / Linux
 
-## Diagnostics
+The installer selects the matching upstream CLIProxyAPI release for Windows, macOS, or Linux. Windows is currently verified end to end; macOS and Linux reports are welcome.
+
+```bash
+npm install -g github:wangsiyi7/claudex
+claudex setup
+claudex auth codex
+claudex preset balanced --launch
+```
+
+Prerequisites: Node.js 20+, Claude Code, and Codex CLI.
+
+## Everyday commands
 
 ```powershell
-claudex doctor
+claudex                         # open the saved profile
+claudex --continue              # resume the last session
+claudex doctor                  # verify binaries, proxy, OAuth and model
+claudex config                  # print safe configuration; token is redacted
+claudex proxy start             # start the loopback proxy
+claudex proxy stop              # stop it
 ```
 
-The doctor checks:
+## Codex calling Claude Code
 
-1. Claude Code and Codex CLI availability;
-2. the installed CLIProxyAPI binary;
-3. local proxy health;
-4. OAuth-backed model discovery;
-5. whether the configured model is actually available.
-
-If the target is unavailable:
-
-```powershell
-claudex config set model <available-model-id>
-```
+The companion repository [codex-claude-code-skill](https://github.com/wangsiyi7/codex-claude-code-skill) installs a global Codex skill for bounded delegation to native Claude Code or to the Claudex route.
 
 ## Security boundaries
 
-- The proxy binds to `127.0.0.1`, not the LAN.
+- CLIProxyAPI binds to `127.0.0.1`, not the LAN.
 - The management API is disabled.
-- The local proxy token and OAuth files stay outside this repository.
-- Agent-team investigation uses read-only `plan` permission mode.
-- Downloads come from the upstream CLIProxyAPI GitHub release and are checked against the release SHA-256 digest when provided.
+- A random local bearer token protects the proxy.
+- OAuth files and local configuration stay outside the repository.
+- Agent-team investigation defaults to read-only `plan` mode.
+- Upstream CLIProxyAPI downloads are checked against release SHA-256 metadata when available.
 
-This is an independent community project, not an OpenAI, Anthropic, Claude Code, or CLIProxyAPI product. Review the applicable provider terms before routing subscription-backed authentication through third-party software.
+## What this project is not
+
+- It is not affiliated with OpenAI, Anthropic, Claude Code, or CLIProxyAPI.
+- It does not turn a subscription into a public API service.
+- It does not guarantee that a private or account-gated model is available to everyone.
+- It does not make eight `max`-effort agents a good financial decision. The crab refuses liability.
+
+Review the applicable provider terms before routing subscription-backed authentication through third-party software.
+
+## Development
+
+```powershell
+npm install
+npm run check
+npm test
+```
 
 ## License
 
