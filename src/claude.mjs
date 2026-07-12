@@ -1,6 +1,7 @@
 import { spawn, spawnSync } from 'node:child_process';
 import { access } from 'node:fs/promises';
 import { loadConfig } from './config.mjs';
+import { resolveCommand } from './command.mjs';
 import { proxyExecutable, proxyStatus, startProxy } from './proxy.mjs';
 
 export function proxyEnvironment(config) {
@@ -29,7 +30,8 @@ export async function runClaude(args = [], overrides = {}) {
   const forwarded = [...args];
   if (!hasOption(forwarded, '--model')) forwarded.unshift('--model', overrides.model ?? config.model);
   if (!hasOption(forwarded, '--effort')) forwarded.unshift('--effort', overrides.effort ?? config.mainEffort);
-  const child = spawn('claude', forwarded, {
+  const invocation = resolveCommand('claude', forwarded);
+  const child = spawn(invocation.command, invocation.args, {
     cwd: overrides.cwd ?? process.cwd(),
     env: proxyEnvironment(config),
     stdio: overrides.stdio ?? 'inherit',
@@ -47,9 +49,11 @@ export async function runClaude(args = [], overrides = {}) {
 
 export async function runDoctor(config) {
   const checks = [];
-  const claude = spawnSync('claude', ['--version'], { encoding: 'utf8', windowsHide: true });
+  const claudeInvocation = resolveCommand('claude', ['--version']);
+  const claude = spawnSync(claudeInvocation.command, claudeInvocation.args, { encoding: 'utf8', windowsHide: true });
   checks.push({ check: 'Claude Code', ok: claude.status === 0, detail: claude.stdout?.trim() || claude.error?.message });
-  const codex = spawnSync('codex', ['--version'], { encoding: 'utf8', windowsHide: true });
+  const codexInvocation = resolveCommand('codex', ['--version']);
+  const codex = spawnSync(codexInvocation.command, codexInvocation.args, { encoding: 'utf8', windowsHide: true });
   checks.push({ check: 'Codex CLI', ok: codex.status === 0, detail: codex.stdout?.trim() || codex.error?.message });
   let proxyInstalled = true;
   await access(proxyExecutable()).catch(() => { proxyInstalled = false; });

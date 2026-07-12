@@ -1,5 +1,6 @@
 import { spawn } from 'node:child_process';
 import { proxyEnvironment } from './claude.mjs';
+import { resolveCommand } from './command.mjs';
 import { startProxy } from './proxy.mjs';
 
 function parseArgs(args, config) {
@@ -40,7 +41,8 @@ function claudePrint(prompt, { config, effort, cwd = process.cwd() }) {
     '--output-format', 'text',
     '--no-session-persistence'
   ];
-  const child = spawn('claude', args, {
+  const invocation = resolveCommand('claude', args);
+  const child = spawn(invocation.command, invocation.args, {
     cwd,
     env: proxyEnvironment(config),
     stdio: ['ignore', 'pipe', 'pipe'],
