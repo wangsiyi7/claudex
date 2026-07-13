@@ -2,6 +2,16 @@
 
 Everything below is ready to publish. The acquisition language is parody; the software, repository, and launch site are real.
 
+## Quick X project card
+
+![Claudex quick project card](../assets/claudex-x-project-card.png)
+
+> Claudex: Claude Code shell. Codex brain. Adjustable effort.
+>
+> `gpt-5.6-sol` · Codex OAuth · right-sized subagents
+>
+> https://github.com/wangsiyi7/claudex
+
 ## X thread — English
 
 ### Post 1 — launch
