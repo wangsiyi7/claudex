@@ -7,6 +7,8 @@
 </p>
 
 <p align="center">
+  <a href="https://claudex-sol.xyropy.chatgpt.site"><img alt="Claudex 正式发布站" src="https://img.shields.io/badge/正式发布站-立即访问-f97316?style=flat-square"></a>
+  <a href="launch/CLAUDEX-LAUNCH.md"><img alt="中英文发布素材" src="https://img.shields.io/badge/发布素材-中文%20%2B%20EN-7c9cff?style=flat-square"></a>
   <img alt="本地测试" src="https://img.shields.io/badge/本地测试-4%2F4%20通过-34d399?style=flat-square">
   <a href="LICENSE"><img alt="MIT 许可证" src="https://img.shields.io/badge/许可证-MIT-a78bfa?style=flat-square"></a>
   <img alt="Node 20+" src="https://img.shields.io/badge/node-%3E%3D20-65a30d?style=flat-square">

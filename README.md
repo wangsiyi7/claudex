@@ -7,6 +7,8 @@
 </p>
 
 <p align="center">
+  <a href="https://claudex-sol.xyropy.chatgpt.site"><img alt="official launch site" src="https://img.shields.io/badge/official%20launch-site-f97316?style=flat-square"></a>
+  <a href="launch/CLAUDEX-LAUNCH.md"><img alt="bilingual launch pack" src="https://img.shields.io/badge/launch%20pack-EN%20%2B%20中文-7c9cff?style=flat-square"></a>
   <img alt="local tests" src="https://img.shields.io/badge/local%20tests-4%2F4%20passing-34d399?style=flat-square">
   <a href="LICENSE"><img alt="MIT license" src="https://img.shields.io/badge/license-MIT-a78bfa?style=flat-square"></a>
   <img alt="Node 20+" src="https://img.shields.io/badge/node-%3E%3D20-65a30d?style=flat-square">
