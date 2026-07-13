@@ -26,6 +26,8 @@
 
 > **The joke:** Claude Code adopted a Codex model. The crab kept the terminal. Its new collar says `CX`, which is legally distinct from having an identity crisis.
 
+> **Fastest path:** copy the four commands below. The balanced preset starts the main session at `high`, investigators at `medium`, and concurrency at `3`.
+
 <p align="center">
   <img src="assets/claudex-acquisition-rider.png" alt="Claudex acquisition complete: the Codex pet rides the Claude Code crab" width="100%" />
 </p>
@@ -40,6 +42,8 @@ claudex setup
 claudex auth codex
 claudex preset balanced --launch
 ```
+
+Campaign assets and ready-to-post English copy: **[Campaign Kit](docs/CAMPAIGN-KIT.md)**.
 
 That opens Claude Code with:
 

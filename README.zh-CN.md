@@ -26,6 +26,8 @@
 
 > **本项目的笑点：** Claude Code 收养了一个 Codex 模型。小螃蟹坚持留下终端，还戴上了写着 `CX` 的项圈——这绝对不是身份危机，只是跨平台协作。
 
+> **最快路径：** 直接复制下面四条命令。`balanced` 预设会把主会话设为 `high`、调查代理设为 `medium`、并发上限设为 `3`。
+
 <p align="center">
   <img src="assets/claudex-acquisition-rider.png" alt="Claudex 完成收购：Codex 宠物骑在 Claude Code 小螃蟹上" width="100%" />
 </p>
@@ -40,6 +42,8 @@ claudex setup
 claudex auth codex
 claudex preset balanced --launch
 ```
+
+公众号中文稿、X 英文 Thread 和全部配图：**[Campaign Kit](docs/CAMPAIGN-KIT.md)**。
 
 启动后的默认配置：
 
