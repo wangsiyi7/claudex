@@ -3,6 +3,7 @@
 import { applyPreset, loadConfig, presets, setupConfig, updateConfig } from '../src/config.mjs';
 import { authenticate, installProxy, proxyStatus, startProxy, stopProxy } from '../src/proxy.mjs';
 import { runClaude, runDoctor } from '../src/claude.mjs';
+import { installPet } from '../src/pet.mjs';
 import { runTeam } from '../src/team.mjs';
 
 const args = process.argv.slice(2);
@@ -18,6 +19,8 @@ Usage:
   claudex auth codex|claude       Run the provider OAuth login
   claudex proxy start|stop|status Manage the local proxy
   claudex doctor                  Check binaries, proxy, auth and model routing
+  claudex pet install             Install and select the animated Claudex Codex pet
+  claudex pet install --no-select Install the pet without changing the current selection
   claudex preset list             Show effort presets
   claudex preset <name>           Persist economy, balanced, quality or maximum
   claudex preset <name> --launch  Apply a preset and open Claude Code immediately
@@ -54,6 +57,12 @@ try {
     else throw new Error('Use: claudex proxy start|stop|status');
   } else if (command === 'doctor') {
     await runDoctor(await loadConfig());
+  } else if (command === 'pet') {
+    const action = args[1];
+    if (action !== 'install') throw new Error('Use: claudex pet install [--no-select]');
+    const result = await installPet({ select: !args.includes('--no-select') });
+    console.log(`Claudex pet installed at ${result.targetDirectory}`);
+    if (result.selected) console.log('Claudex is now the selected Codex pet. Restart Codex if the open window does not refresh.');
   } else if (command === 'team') {
     await runTeam(args.slice(1), await loadConfig());
   } else if (command === 'preset') {

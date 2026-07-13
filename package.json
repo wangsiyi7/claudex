@@ -3,12 +3,19 @@
   "version": "0.1.0",
   "description": "Run Claude Code with Codex-authenticated GPT models through CLIProxyAPI.",
   "type": "module",
+  "files": [
+    "bin",
+    "src",
+    "pet/claudex",
+    "README.md",
+    "LICENSE"
+  ],
   "bin": {
     "claudex": "./bin/claudex.mjs"
   },
   "scripts": {
     "test": "node --test",
-    "check": "node --check bin/claudex.mjs && node --check src/command.mjs && node --check src/config.mjs && node --check src/proxy.mjs && node --check src/claude.mjs && node --check src/team.mjs"
+    "check": "node --check bin/claudex.mjs && node --check src/command.mjs && node --check src/config.mjs && node --check src/proxy.mjs && node --check src/claude.mjs && node --check src/pet.mjs && node --check src/team.mjs"
   },
   "engines": {
     "node": ">=20"

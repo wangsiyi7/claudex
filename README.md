@@ -43,6 +43,14 @@ claudex auth codex
 claudex preset balanced --launch
 ```
 
+Want the mascot too? Install and select the animated Claudex Codex pet with one extra command:
+
+```powershell
+claudex pet install
+```
+
+It copies the bundled v2 pet into `~/.codex/pets/claudex`, backs up the current Codex config, and selects Claudex. See the **[pet download page](pet/claudex/README.md)** for raw files, checksums, and the `--no-select` option.
+
 Campaign assets and ready-to-post English copy: **[Campaign Kit](docs/CAMPAIGN-KIT.md)**.
 
 That opens Claude Code with:
@@ -163,6 +171,7 @@ Prerequisites: Node.js 20+, Claude Code, and Codex CLI.
 claudex                         # open the saved profile
 claudex --continue              # resume the last session
 claudex doctor                  # verify binaries, proxy, OAuth and model
+claudex pet install             # install and select the animated Claudex pet
 claudex config                  # print safe configuration; token is redacted
 claudex proxy start             # start the loopback proxy
 claudex proxy stop              # stop it

@@ -43,6 +43,14 @@ claudex auth codex
 claudex preset balanced --launch
 ```
 
+还想把 Claudex 本尊领回家？再运行一条命令即可安装并选中动态宠物：
+
+```powershell
+claudex pet install
+```
+
+它会把 v2 宠物包复制到 `~/.codex/pets/claudex`、备份现有 Codex 配置，并自动选择 Claudex。原始文件、SHA-256 校验值以及 `--no-select` 用法见 **[宠物下载页](pet/claudex/README.md)**。
+
 公众号中文稿、X 英文 Thread 和全部配图：**[Campaign Kit](docs/CAMPAIGN-KIT.md)**。
 
 启动后的默认配置：
@@ -163,6 +171,7 @@ claudex preset balanced --launch
 claudex                         # 使用已保存的预设启动
 claudex --continue              # 继续最近一次会话
 claudex doctor                  # 检查程序、代理、OAuth 与模型
+claudex pet install             # 安装并选中 Claudex 动态宠物
 claudex config                  # 显示安全配置；token 会自动隐藏
 claudex proxy start             # 启动本地代理
 claudex proxy stop              # 停止本地代理
